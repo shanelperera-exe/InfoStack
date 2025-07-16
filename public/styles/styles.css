@@ -12,16 +12,21 @@ body {
   margin: 0;
 }
 
+/* Navbar */
 .custom-navbar {
   background-color: white;
   backdrop-filter: blur(10px);
   box-shadow: 0 1px 10px rgba(0, 0, 0, 0.05);
   font-size: 12px;
-  padding: 0.25rem; /* fixed padding unit */
+  padding: 0.25rem;
 }
 
 .logo img {
   max-height: 40px;
+}
+
+.navbar-toggler {
+  border: none;
 }
 
 .btn-outline-light,
@@ -43,7 +48,7 @@ body {
 }
 
 .custom-filled {
-  background-color: #393be5; /* your custom color */
+  background-color: #393be5;
   color: white;
   border: none;
 }
@@ -58,22 +63,11 @@ body {
   margin-bottom: 0.2rem;
 }
 
-.navbar-toggler {
-  border: none;
-}
-
-.trending-title {
-  font-size: 5rem;
-  font-weight: 700;
-  text-align: left;
-  color: #393be5;
-  margin-left: 2rem;
-}
-
+/* Article Cards */
 .article-card {
   position: relative;
   width: 100%;
-  aspect-ratio: 1 / 1; /* Keep square shape */
+  aspect-ratio: 1 / 1;
   overflow: hidden;
   border-radius: 12px;
   background-color: #000;
@@ -85,29 +79,26 @@ body {
   justify-content: flex-end;
 }
 
-.article-card.large-card {
-  aspect-ratio: 1 / 1;
-  max-height: 625px;
-  max-width: 625px;
-  margin-left: 2rem;
-  font-size: 3rem;
-}
-
-.article-card.small-card {
-  aspect-ratio: 1 / 1;
-  height: 300px;
-  max-height: 300px;
-  width: 300px;
-  margin-left: -4rem;
-}
-
-/* Subtle zoom and shadow on hover */
 .article-card:hover {
   transform: translateY(-6px) scale(1.02);
   box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15);
 }
 
-/* Card image fills the entire card */
+.article-card.large-card {
+  max-height: 625px;
+  max-width: 625px;
+  margin-left: 2rem;
+}
+
+.article-card.small-card {
+  align-self: flex-start;
+  height: 300px;
+  max-height: 300px;
+  width: 300px;
+  margin-left: 1.5rem;
+}
+
+/* Image & Overlay */
 .card-img-container {
   position: absolute;
   inset: 0;
@@ -126,7 +117,6 @@ body {
   transform: scale(1.05);
 }
 
-/* Text content over image at bottom */
 .overlay-text {
   position: absolute;
   bottom: 0;
@@ -139,45 +129,82 @@ body {
   transition: background 0.3s ease;
 }
 
+.overlay-text small {
+  font-size: 1rem;
+}
+
+.article-card.small-card .overlay-text {
+  padding: 0.75rem 1rem;
+}
+
+/* Titles */
 .card-title {
-  font-size: 4rem;
   font-weight: 600;
   margin: 0;
 }
 
-.card-text {
-  font-size: 1rem;
-  margin-top: 1rem;
+.article-card.large-card .card-title {
+  font-size: 4rem;
+  overflow: hidden;
 }
 
-/* Removed unused .small-card-container margin-left */
+.article-card.small-card .card-title {
+  font-size: 1.5rem;
+  overflow: hidden;
+}
 
+.card-title-link {
+  color: white;
+  text-decoration: none;
+}
+
+.card-title-link:hover {
+  text-decoration: underline;
+}
+
+.truncate-multiline {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal;
+}
+
+/* Small card adjustments */
+.article-card.small-card .card-title {
+  font-size: 1rem;
+  margin-bottom: 0.25rem;
+}
+
+.article-card.small-card small {
+  font-size: 0.75rem;
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Most Popular */
 .most-popular-section {
-  background-color:#393be5;
+  background-color: #393be5;
   border-radius: 12px;
   padding: 1.5rem;
   max-width: 425px;
   width: 100%;
   margin-left: 1.25rem;
   height: 625px;
+  color: white;
 }
 
 .most-popular-section h2 {
-  font-size: 2rem; /* h5 equivalent */
-  color: white;
-  margin-bottom: 1rem;
-}
-
-.most-popular-section .section-icon {
-  background-color: white;     
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  font-size: 2.5rem;
 }
 
 .most-popular-section ul {
-  padding-left: 0;
   list-style: none;
+  padding-left: 0;
   margin: 0;
 }
 
@@ -193,7 +220,7 @@ body {
 
 .most-popular-section a {
   text-decoration: none;
-  color: #111827;
+  color: #fff;
 }
 
 .most-popular-section a:hover {
@@ -201,10 +228,21 @@ body {
 }
 
 .most-popular-section small {
-  color: #6b7280; /* gray-500 */
   font-size: 0.8rem;
+  color: #d1d5db;
 }
 
+.most-popular-section .svg-bg {
+  background-color: white;
+  padding: 1rem;                /* Increased padding */
+  width: 4rem;                /* Optional: fixed width */
+  height: 4rem;               /* Optional: fixed height */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Utility Layouts */
 .main-layout {
   display: flex;
   align-items: flex-start;
@@ -216,99 +254,17 @@ body {
   flex: 1;
 }
 
-.custom-btn {
-  background-color: var(--dark-bg);
-  color: #fff;
-  border: none;
-  border-radius: 999px;
-  padding: 0.25rem 1rem;
-  font-weight: 500;
-  transition: all 0.3s ease;
-  font-size: 1rem;
-}
-
-.custom-btn:hover {
-  background-color: white;
-  color: var(--dark-bg);
-  border: 2px solid var(--dark-bg);
-  transform: scale(1.05);
-}
-
-.custom-outline-btn {
-  background-color: transparent;
-  color: red;
-  border: 2px solid red;
-  border-radius: 999px;
-  font-weight: 500;
-  transition: all 0.3s ease;
-  font-size: 1rem;
-}
-
-.custom-outline-btn:hover {
-  background-color: red;
-  color: #fff;
-  transform: scale(1.05);
-}
-
-
-
-@media (max-width: 768px) {
-  .article-card.large-card {
-    aspect-ratio: 1 / 1;
-    max-height: 525px;
-    max-width: 525px;
-    margin-left: 0;
-  }
-
-  .article-card.small-card {
-    aspect-ratio: 1 / 1;
-    max-height: 250px;
-  }
-
-  .overlay-text {
-    padding: 0.75rem;
-  }
-
-  .card-title {
-    font-size: 0.95rem;
-  }
-
-  .card-text {
-    font-size: 0.8rem;
-  }
-
-  .custom-navbar {
-    padding: 0.15rem;
-  }
-
-  .navbar-collapse {
-    padding: 1rem;
-    border-radius: 10px;
-  }
-
-  .navbar-collapse .btn {
-    width: 100%;
-    text-align: center;
-  }
-
-  .navbar-toggler {
-    background-color: white;
-  }
-
-  .logo img {
-    max-height: 40px;
-  }
-}
 
 .article-container {
-  max-width: 900px;
+  max-width: 1200px;
+  font-size: 2rem;
   margin: 0 auto;
   font-family: var(--font);
   color: var(--text-color);
 }
 
 .article-title {
-  font-size: 2.75rem;
+  font-size: 4rem;
   font-weight: 700;
   line-height: 1.2;
   margin-bottom: 1rem;
@@ -359,27 +315,64 @@ body {
   padding: 0.5rem 1.25rem;
 }
 
-.article-card {
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+/* Buttons */
+.custom-btn {
+  background-color: var(--dark-bg);
+  color: #fff;
+  border: none;
+  border-radius: 999px;
+  padding: 0.25rem 1rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  font-size: 1rem;
 }
 
-.article-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+.custom-btn:hover {
+  background-color: white;
+  color: var(--dark-bg);
+  border: 2px solid var(--dark-bg);
+  transform: scale(1.05);
 }
 
+.custom-outline-btn {
+  background-color: transparent;
+  color: red;
+  border: 2px solid red;
+  border-radius: 999px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  font-size: 1rem;
+}
+
+.custom-outline-btn:hover {
+  background-color: red;
+  color: #fff;
+  transform: scale(1.05);
+}
+
+/* Empty Page Logo */
 .empty-page-logo {
   margin-top: 4rem;
   height: 300px;
 }
 
+.edit h1 {
+  font-size: 4rem;
+}
+
+.create h1 {
+  font-size: 4rem;
+}
+
+/* Footer */
 .custom-footer {
-  background-color: #393be5; /* subtle gray bg */
+  background-color: #393be5;
   border-top: 1px solid rgba(0, 0, 0, 0.05);
   font-size: 1rem;
   border-radius: 12px 12px 0 0;
-  transition: background 0.3s ease;
   color: white;
+  transition: background 0.3s ease;
+  box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.2);
 }
 
 .custom-footer:hover {
@@ -402,4 +395,110 @@ body {
 
 .custom-footer img:hover {
   transform: scale(1.1);
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  #mobileCarousel .article-card.large-card {
+    max-width: 100%;
+    margin: 0 auto;
+    height: auto;
+  }
+
+  #mobileCarousel .carousel-item {
+    padding: 1rem;
+  }
+
+  .overlay-text .card-title {
+    font-size: 1.5rem;
+  }
+
+  .overlay-text small {
+    font-size: 0.875rem;
+  }
+
+  .article-card.large-card {
+    max-width: 550px;
+    max-height: 550px;
+    margin-left: 0;
+  }
+
+  .article-card.small-card {
+    max-height: 250px;
+  }
+
+  .overlay-text {
+    padding: 0.75rem;
+  }
+
+  .card-title {
+    font-size: 0.5rem;
+  }
+
+  .card-text {
+    font-size: 0.8rem;
+  }
+
+  .custom-navbar {
+    padding: 0.15rem;
+  }
+
+  .navbar-collapse {
+    padding: 1rem;
+    border-radius: 10px;
+  }
+
+  .navbar-collapse .btn {
+    width: 100%;
+    text-align: center;
+  }
+
+  .navbar-toggler {
+    background-color: white;
+  }
+
+  .logo img {
+    max-height: 40px;
+  }
+
+  .article-card .card-title {
+    font-size: 1.25rem; /* smaller than desktop but readable */
+  }
+  
+  /* Or if you want smaller titles on large cards only */
+  .article-card.large-card .card-title {
+    font-size: 2rem; /* smaller than desktop large-card */
+  }
+
+  /* And for small cards titles even smaller */
+  .article-card.small-card .card-title {
+    font-size: 1rem;
+  }
+
+  .article-title {
+    font-size: 2.5rem; /* was 4rem, smaller on mobile */
+  }
+
+  /* Edit page heading smaller */
+  .edit h1 {
+    font-size: 2.5rem; /* was 4rem */
+  }
+
+  /* Create page heading smaller */
+  .create h1 {
+    font-size: 2.5rem; /* was 4rem */
+  }
+
+  .most-popular-section {
+    width: calc(100% - 2rem); /* Account for 1rem left and right padding */
+    margin: 1rem auto 0 auto; /* Center it */
+    padding: 1rem;
+    height: auto;
+  }
+
+  .empty-page-logo {
+    height: 150px; 
+    margin-top: 2rem;
+    margin-bottom: 5rem;
+  }
 }

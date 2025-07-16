@@ -2,6 +2,7 @@
 
 <section class="trending-section container-fluid my-4 px-4">
   <div>
+    <div>
     <% if (posts.length === 0) { %>
       <div class="text-center py-5">
         <h4 class="mb-3">No articles yet</h4>
@@ -10,83 +11,132 @@
         <img src="images/logo1.png" alt="logo" class="empty-page-logo">
       </div>
     <% } else { %>
-      <div class="row g-4 align-items-start">
-        <!-- Left Large Card -->
-        <div class="col-lg-6">
-          <a href="/article/<%= posts[0].id %>" class="text-decoration-none text-dark">
-            <div class="card article-card large-card">
-              <div class="card-img-container">
-                <img src="<%= posts[0].image %>" class="card-img" alt="Trending Article" />
-              </div>
-              <div class="card-body overlay-text">
-                <h5 class="card-title"><%= posts[0].title %></h5>
-                <p class="card-text"><%= posts[0].content.substring(0, 100) %>...</p>
-              </div>
-            </div>
-          </a>
-        </div>
 
-        <!-- Middle 2 Small Cards stacked vertically -->
-        <div class="col-lg-2 d-flex flex-column gap-4">
-          <% for (let i = 1; i <= 2; i++) { %>
-            <% if (posts[i]) { %>
-              <a href="/article/<%= posts[i].id %>" class="text-decoration-none text-dark">
-                <div class="card article-card small-card square-card">
+    <div class="row g-4 align-items-start">
+      <!-- Desktop Cards (Large + Small) -->
+      <div class="col-lg-8 d-none d-lg-block">
+        <div class="row">
+          <!-- Left Large Card -->
+          <div class="col-lg-8">
+            <a href="/article/<%= posts[0].id %>" class="text-decoration-none text-dark">
+              <div class="card article-card large-card">
+                <div class="card-img-container">
+                  <img src="<%= posts[0].image %>" class="card-img" alt="Trending Article" />
+                </div>
+                <div class="card-body overlay-text">
+                  <h5 class="card-title truncate-multiline">
+                    <a href="/article/<%= posts[0].id %>" class="card-title-link">
+                      <%= posts[0].title %>
+                    </a>
+                  </h5>
+                  <small><%= posts[0].author %> - <%= posts[0].timeAgo %></small>
+                </div>
+              </div>
+            </a>
+          </div>
+
+          <!-- Middle 2 Small Cards -->
+          <div class="col-lg-4 d-flex flex-column">
+            <% for (let i = 1; i <= 2; i++) { %>
+              <% if (posts[i]) { %>
+                <div class="card article-card small-card square-card mb-4">
                   <div class="card-img-container">
                     <img src="<%= posts[i].image %>" class="card-img" alt="Article <%= i %>" />
                   </div>
                   <div class="card-body overlay-text">
-                    <h6 class="card-title"><%= posts[i].title %></h6>
-                    <p class="card-text"><%= posts[i].content.substring(0, 50) %>...</p>
-                  </div>
-                </div>
-              </a>
-            <% } else { %>
-              <div class="card article-card small-card square-card">
-                <div class="card-img-container">
-                  <img src="https://via.placeholder.com/300x300" class="card-img" alt="Placeholder" />
-                </div>
-                <div class="card-body overlay-text">
-                  <h6 class="card-title">Coming Soon</h6>
-                  <p class="card-text">More articles will appear here as you publish them.</p>
-                </div>
-              </div>
-            <% } %>
-          <% } %>
-        </div>
-
-        <!-- Right Most Popular Section -->
-        <div class="col-lg-4">
-          <div class="most-popular-section p-4 rounded">
-            <!-- Most Popular Heading -->
-            <div class="d-flex justify-content-between align-items-center mb-3">
-              <h2 class="h5 m-0">Most Popular</h2>
-              <div class="bg-white p-2 d-flex align-items-center justify-content-center">
-                <svg style="width: 2rem; height: 2rem;" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 32 32">
-                  <path fill="currentColor" d="M20.5 8v2h6.586L18.5 18.586l-4.293-4.293a1 1 0 0 0-1.414 0L2.5 24.586 3.914 26l9.586-9.586 4.293 4.293a1 1 0 0 0 1.414 0l9.293-9.293V18h2V8z"/>
-                </svg>
-              </div>
-            </div>
-
-            <!-- Most Popular List -->
-            <ul class="list-unstyled">
-              <% posts.forEach(post => { %>
-                <li class="mb-4">
-                  <div class="d-flex flex-column">
-                    <h5 class="mb-1">
-                      <a href="<%= post.url %>" class="text-decoration-none text-light">
-                        <%= post.title %>
+                    <h6 class="card-title small-title truncate-multiline">
+                      <a href="/article/<%= posts[i].id %>" class="card-title-link">
+                        <%= posts[i].title %>
                       </a>
-                    </h5>
-                    <small style="color: white;">By <a href="<%= post.authorUrl %>" style="color: white;"><%= post.author %></a></small>
-                    <hr style="color: white;">
+                    </h6>
+                    <small><%= posts[i].author %> - <%= posts[i].timeAgo %></small>
                   </div>
-                </li>
-              <% }) %>
-            </ul>
+                </div>
+              <% } else { %>
+                <div class="card article-card small-card square-card mb-4">
+                  <div class="card-img-container">
+                    <img src="https://via.placeholder.com/300x300" class="card-img" alt="Placeholder" />
+                  </div>
+                  <div class="card-body overlay-text">
+                    <h6 class="card-title small-title">Coming Soon</h6>
+                    <p class="card-text">More articles will appear here as you publish them.</p>
+                  </div>
+                </div>
+              <% } %>
+            <% } %>
           </div>
         </div>
       </div>
+
+      <!-- Mobile Carousel -->
+      <div class="col-12 d-lg-none">
+        <div id="mobileCarousel" class="carousel slide" data-bs-ride="carousel">
+          <div class="carousel-inner">
+            <% posts.forEach((post, index) => { %>
+              <div class="carousel-item <%= index === 0 ? 'active' : '' %>">
+                <a href="/article/<%= post.id %>" class="text-decoration-none text-dark">
+                  <div class="card article-card large-card">
+                    <div class="card-img-container">
+                      <img src="<%= post.image %>" class="card-img" alt="Article <%= index + 1 %>" />
+                    </div>
+                    <div class="card-body overlay-text">
+                      <h5 class="card-title">
+                        <a href="/article/<%= post.id %>" class="card-title-link">
+                          <%= post.title.length > 50 ? post.title.substring(0, 50) + '...' : post.title %>
+                        </a>
+                      </h5>
+                      <small><%= posts[0].author %> - <%= posts[0].timeAgo %></small>
+                    </div>
+                  </div>
+                </a>
+              </div>
+            <% }) %>
+          </div>
+          <button class="carousel-control-prev" type="button" data-bs-target="#mobileCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon"></span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#mobileCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon"></span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Right Most Popular Section -->
+      <div class="col-lg-4">
+        <div class="most-popular-section p-4 rounded">
+          <!-- Most Popular Heading -->
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h2 class="h5 m-0">Most Popular</h2>
+            <div class="svg-bg">
+              <svg style="width: 2rem; height: 2rem;" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 32 32">
+                <path fill="black" d="M20.5 8v2h6.586L18.5 18.586l-4.293-4.293a1 1 0 0 0-1.414 0L2.5 24.586 3.914 26l9.586-9.586 4.293 4.293a1 1 0 0 0 1.414 0l9.293-9.293V18h2V8z"/>
+              </svg>
+            </div>
+          </div>
+
+          <!-- Most Popular List -->
+          <ul class="list-unstyled">
+            <% posts.forEach((post, index) => { %>
+              <li class="mb-1">
+                <div class="d-flex flex-column">
+                  <h5 class="mb-1">
+                    <a href="<%= post.url %>" class="text-decoration-none text-light">
+                      <%= post.title %>
+                    </a>
+                  </h5>
+                  <small style="color: white;">By <a href="<%= post.authorUrl %>" style="color: white;"><%= post.author %></a></small>
+                    <% if (index !== posts.length - 1) { %>
+                      <hr style="color: white;">
+                    <% } %>
+                </div>
+              </li>
+            <% }) %>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+
     <% } %>
   </div>
 </section>

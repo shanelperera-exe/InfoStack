@@ -1,6 +1,10 @@
 import express from "express";
 import path from "path";
 import { fileURLToPath } from "url";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime.js";
+
+dayjs.extend(relativeTime);
 
 const app = express();
 const port = 3000;
@@ -21,7 +25,13 @@ let posts = [];
 
 // Home Page
 app.get("/", (req, res) => {
-  res.render("index.ejs", { posts });
+  // Map posts to add a dynamic timeAgo field
+  const postsWithTimeAgo = posts.map(post => ({
+    ...post,
+    timeAgo: dayjs(post.createdAt).fromNow()
+  }));
+
+  res.render("index.ejs", { posts: postsWithTimeAgo });
 });
 
 // Create Page (GET)
@@ -38,7 +48,7 @@ app.post("/create", (req, res) => {
     author,
     image,
     content,
-    date: new Date().toDateString()
+    createdAt: new Date()  // <-- add createdAt field here
   };
   posts.unshift(newPost); // Add to top
   res.redirect("/");
@@ -48,7 +58,8 @@ app.post("/create", (req, res) => {
 app.get("/article/:id", (req, res) => {
   const post = posts.find(p => p.id === req.params.id);
   if (post) {
-    res.render("article.ejs", { ...post });
+    const date = post.createdAt ? post.createdAt.toDateString() : "Unknown date";
+    res.render("article.ejs", { ...post, date });
   } else {
     res.status(404).send("Post not found");
   }
@@ -58,7 +69,7 @@ app.get("/article/:id", (req, res) => {
 app.get("/edit/:id", (req, res) => {
   const post = posts.find(p => p.id === req.params.id);
   if (post) {
-    res.render("edit.ejs", { post }); // ✅ fixed from edit.js
+    res.render("edit.ejs", { post });
   } else {
     res.status(404).send("Post not found");
   }
@@ -73,6 +84,7 @@ app.post("/article/:id/edit", (req, res) => {
     post.author = author;
     post.image = image;
     post.content = content;
+    // Optional: update createdAt or keep original post time
     res.redirect(`/article/${post.id}`);
   } else {
     res.status(404).send("Post not found");
